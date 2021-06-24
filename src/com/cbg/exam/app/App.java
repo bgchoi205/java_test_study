@@ -1,5 +1,7 @@
 package com.cbg.exam.app;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.cbg.exam.app.dto.Article;
@@ -9,6 +11,7 @@ import com.cbg.exam.util.Ut;
 
 public class App {
 	public static int lastArticleId = 0;
+	static ArrayList<Article> articles = new ArrayList<>();
 	
 	public static void run() {
 		
@@ -44,7 +47,15 @@ public class App {
 				article.title = title;
 				article.body = body;
 				
+				articles.add(article);
+				
 				System.out.println(article.id + "번 게시물 생성완료");
+				
+			}
+			else if(command.equals("/usr/article/list")) {
+				for(Object article : articles) {
+					System.out.println(article.toString());
+				}
 				
 			}
 			
