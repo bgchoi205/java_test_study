@@ -2,8 +2,14 @@ package com.cbg.exam.app;
 
 import java.util.Scanner;
 
-public class App {
+import com.cbg.exam.app.dto.Article;
+import com.cbg.exam.util.Ut;
 
+
+
+public class App {
+	public static int lastArticleId = 0;
+	
 	public static void run() {
 		
 		System.out.println("==텍스트 게시판 시작==");
@@ -20,6 +26,27 @@ public class App {
 				System.out.println("프로그램 종료");
 				break;
 			}
+			else if(command.equals("/usr/article/write")) {
+				
+				Article article = new Article();
+				Ut ut = new Ut();
+				
+				System.out.print("제목 입력 : ");
+				String title = sc.nextLine().trim();
+				System.out.print("내용 입력 : ");
+				String body = sc.nextLine().trim();
+				
+				lastArticleId++;
+				
+				article.id = lastArticleId;
+				article.regDate = ut.getNow();
+				article.updateDate = ut.getNow();
+				article.title = title;
+				article.body = body;
+				
+				System.out.println(article.id + "번 게시물 생성완료");
+				
+			}
 			
 		}
 		
@@ -28,3 +55,4 @@ public class App {
 	}
 
 }
+
