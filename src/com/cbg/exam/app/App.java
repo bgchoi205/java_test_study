@@ -10,14 +10,34 @@ import com.cbg.exam.util.Ut;
 
 
 public class App {
-	public static int lastArticleId = 0;
+	static int lastArticleId = 0;
 	static ArrayList<Article> articles = new ArrayList<>();
 	
 	public static void run() {
 		
+		Scanner sc = new java.util.Scanner(System.in);
+		
 		System.out.println("==텍스트 게시판 시작==");
 		
-		Scanner sc = new java.util.Scanner(System.in);
+		// test 게시물 생성
+		for(int i = 1; i <= 10; i++) {
+			Article article = new Article();
+			Ut ut = new Ut();
+			
+			String title = "제목" + i;
+			String body = "내용" + i;
+			
+			lastArticleId++;
+			
+			article.id = lastArticleId;
+			article.regDate = ut.getNow();
+			article.updateDate = ut.getNow();
+			article.title = title;
+			article.body = body;
+			
+			articles.add(article);
+		}
+		
 		
 		while(true) {
 			
@@ -53,10 +73,40 @@ public class App {
 				
 			}
 			else if(command.equals("/usr/article/list")) {
-				for(Object article : articles) {
-					System.out.println(article.toString());
+//				for(Object article : articles) {
+//					System.out.println(article);
+//				}
+				
+				for(int i = (articles.size() - 1); i >= 0; i--) {
+					System.out.println(articles.get(i));
 				}
 				
+			}
+			else if(command.startsWith("/usr/article/detail")) {
+				String commandBit = command.split("\\?")[1];
+				int commandBitId = Integer.parseInt(commandBit.split("=")[1]);
+				
+				Article article = null;
+				
+				for(Article a : articles) {
+					if(a.id == commandBitId) {
+						article = a;
+						continue;
+					}
+				}
+				if(article == null) {
+					System.out.println("존재하지 않는 게시물입니다.");
+					continue;
+				}
+				System.out.println("번호:" + article.id);
+				System.out.println("등록:" + article.regDate);
+				System.out.println("수정:" + article.updateDate);
+				System.out.println("제목:" + article.title);
+				System.out.println("내용:" + article.body);
+			}
+			else {
+				System.out.println("올바른 명령어가 아닙니다.");
+				continue;
 			}
 			
 		}

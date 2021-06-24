@@ -7,8 +7,8 @@ public class Article{
 	public String title;
 	public String body;
 	
-	
+	@Override
 	public String toString() {
-		return "번호:" + this.id + " 제목:" + this.title + " 작성:" + this.regDate;
+		return "번호:" + this.id + ", 제목:" + this.title + ", 작성:" + this.regDate;
 	}
 }

@@ -11,4 +11,5 @@ public class Ut {
 		String format_time1 = format1.format(time.getTime());
 		return format_time1;
 	}
+	
 }
