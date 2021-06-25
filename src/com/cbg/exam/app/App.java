@@ -45,6 +45,8 @@ public class App {
 			
 			String command = sc.nextLine().trim();
 			
+			Rq rq = new Rq(command);
+			
 			if(command.equals("/usr/system/exit")) {
 				System.out.println("프로그램 종료");
 				break;
@@ -83,13 +85,19 @@ public class App {
 				
 			}
 			else if(command.startsWith("/usr/article/detail")) {
-				String commandBit = command.split("\\?")[1];
-				int commandBitId = Integer.parseInt(commandBit.split("=")[1]);
+				String commandBit = command.split("\\?",2)[1];
+				String commandBitName = commandBit.split("=")[0];
+				int commandBitValue = Integer.parseInt(commandBit.split("=")[1]);
+				
+				if(!commandBitName.equals("id")) {
+					System.out.println("올바른 명령어가 아닙니다.");
+					continue;
+				}
 				
 				Article article = null;
 				
 				for(Article a : articles) {
-					if(a.id == commandBitId) {
+					if(a.id == commandBitValue) {
 						article = a;
 						continue;
 					}
@@ -103,6 +111,33 @@ public class App {
 				System.out.println("수정:" + article.updateDate);
 				System.out.println("제목:" + article.title);
 				System.out.println("내용:" + article.body);
+			}
+			else if(command.startsWith("/usr/article/delete")) {
+				String commandBit = command.split("\\?",2)[1];
+				String commandBitName = commandBit.split("=")[0];
+				int commandBitValue = Integer.parseInt(commandBit.split("=")[1]);
+				
+				if(!commandBitName.equals("id")) {
+					System.out.println("올바른 명령어가 아닙니다.");
+					continue;
+				}
+				
+				Article article = null;
+				
+				for(Article a : articles) {
+					if(a.id == commandBitValue) {
+						article = a;
+						continue;
+					}
+				}
+				if(article == null) {
+					System.out.println("존재하지 않는 게시물입니다.");
+					continue;
+				}
+				articles.remove(article);
+				
+				System.out.println(article.id + "번 게시물 삭제완료");
+				
 			}
 			else {
 				System.out.println("올바른 명령어가 아닙니다.");
