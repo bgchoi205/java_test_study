@@ -53,9 +53,9 @@ public class App {
 				
 				Article article = new Article();
 				
-				System.out.print("제목 입력 : ");
+				System.out.printf("제목 입력 : ");
 				String title = sc.nextLine().trim();
-				System.out.print("내용 입력 : ");
+				System.out.printf("내용 입력 : ");
 				String body = sc.nextLine().trim();
 				
 				lastArticleId++;
@@ -118,6 +118,31 @@ public class App {
 				
 				System.out.println(article.id + "번 게시물 삭제완료");
 				
+			}else if(rq.getActionPath().equals("/usr/article/modify")) {
+				int id = rq.getIntParam("id", 0);
+				
+				Article article = null;
+				
+				for(Article a : articles) {
+					if(a.id == id) {
+						article = a;
+						continue;
+					}
+				}
+				if(article == null) {
+					System.out.println("존재하지 않는 게시물입니다.");
+					continue;
+				}
+				System.out.printf("제목 입력 : ");
+				String title = sc.nextLine().trim();
+				System.out.printf("내용 입력 : ");
+				String body = sc.nextLine().trim();
+				
+				article.title = title;
+				article.body = body;
+				article.updateDate = Util.getNow();
+				
+				System.out.println(article.id + "번 게시물 수정 완료");
 			}
 			
 			
