@@ -79,19 +79,12 @@ public class App {
 				
 			}
 			else if(rq.getActionPath().equals("/usr/article/detail")) {
-				String commandBit = command.split("\\?",2)[1];
-				String commandBitName = commandBit.split("=")[0];
-				int commandBitValue = Integer.parseInt(commandBit.split("=")[1]);
-				
-				if(!commandBitName.equals("id")) {
-					System.out.println("올바른 명령어가 아닙니다.");
-					continue;
-				}
+				int id = rq.getIntParam("id", 0);
 				
 				Article article = null;
 				
 				for(Article a : articles) {
-					if(a.id == commandBitValue) {
+					if(a.id == id) {
 						article = a;
 						continue;
 					}
@@ -107,19 +100,12 @@ public class App {
 				System.out.println("내용:" + article.body);
 			}
 			else if(rq.getActionPath().equals("/usr/article/delete")) {
-				String commandBit = command.split("\\?",2)[1];
-				String commandBitName = commandBit.split("=")[0];
-				int commandBitValue = Integer.parseInt(commandBit.split("=")[1]);
-				
-				if(!commandBitName.equals("id")) {
-					System.out.println("올바른 명령어가 아닙니다.");
-					continue;
-				}
+				int id = rq.getIntParam("id", 0);
 				
 				Article article = null;
 				
 				for(Article a : articles) {
-					if(a.id == commandBitValue) {
+					if(a.id == id) {
 						article = a;
 						continue;
 					}
