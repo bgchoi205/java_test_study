@@ -1,40 +1,35 @@
 package com.cbg.exam.app;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.cbg.exam.app.dto.Article;
+import com.cbg.exam.app.repository.ArticleRepository;
 import com.cbg.exam.util.Util;
 
 
 
 public class App {
-	static int lastArticleId = 0;
-	static ArrayList<Article> articles = new ArrayList<>();
+	int lastArticleId;
+	List<Article> articles;
+	Scanner sc;
 	
-	public static void run() {
+	App(){
+		lastArticleId = 0;
+		articles = new ArrayList<>();
+		sc = new java.util.Scanner(System.in);
+	}
+	
+	public void run() {
 		
-		Scanner sc = new java.util.Scanner(System.in);
+		ArticleRepository articleRepository = new ArticleRepository();
 		
 		System.out.println("==텍스트 게시판 시작==");
 		
-		// test 게시물 생성
-		for(int i = 1; i <= 10; i++) {
-			Article article = new Article();
-			
-			String title = "제목" + i;
-			String body = "내용" + i;
-			
-			lastArticleId++;
-			
-			article.id = lastArticleId;
-			article.regDate = Util.getNow();
-			article.updateDate = Util.getNow();
-			article.title = title;
-			article.body = body;
-			
-			articles.add(article);
-		}
+		// test 데이터 생성
+		makeTestData();
+		
 		
 		
 		while(true) {
@@ -81,14 +76,8 @@ public class App {
 			else if(rq.getActionPath().equals("/usr/article/detail")) {
 				int id = rq.getIntParam("id", 0);
 				
-				Article article = null;
+				Article article = articleRepository.getArticleById(id, articles);
 				
-				for(Article a : articles) {
-					if(a.id == id) {
-						article = a;
-						continue;
-					}
-				}
 				if(article == null) {
 					System.out.println("존재하지 않는 게시물입니다.");
 					continue;
@@ -149,6 +138,26 @@ public class App {
 		}
 		
 		System.out.println("== 텍스트 게시판 끝 ==");
+		
+	}
+
+	private void makeTestData() {
+		for(int i = 1; i <= 10; i++) {
+			Article article = new Article();
+			
+			String title = "제목" + i;
+			String body = "내용" + i;
+			
+			lastArticleId++;
+			
+			article.id = lastArticleId;
+			article.regDate = Util.getNow();
+			article.updateDate = Util.getNow();
+			article.title = title;
+			article.body = body;
+			
+			articles.add(article);
+		}
 		
 	}
 
