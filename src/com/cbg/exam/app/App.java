@@ -1,11 +1,10 @@
 package com.cbg.exam.app;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.cbg.exam.app.dto.Article;
-import com.cbg.exam.util.Ut;
+import com.cbg.exam.util.Util;
 
 
 
@@ -22,7 +21,6 @@ public class App {
 		// test 게시물 생성
 		for(int i = 1; i <= 10; i++) {
 			Article article = new Article();
-			Ut ut = new Ut();
 			
 			String title = "제목" + i;
 			String body = "내용" + i;
@@ -30,8 +28,8 @@ public class App {
 			lastArticleId++;
 			
 			article.id = lastArticleId;
-			article.regDate = ut.getNow();
-			article.updateDate = ut.getNow();
+			article.regDate = Util.getNow();
+			article.updateDate = Util.getNow();
 			article.title = title;
 			article.body = body;
 			
@@ -47,14 +45,13 @@ public class App {
 			
 			Rq rq = new Rq(command);
 			
-			if(command.equals("/usr/system/exit")) {
+			if(rq.getActionPath().equals("/usr/system/exit")) {
 				System.out.println("프로그램 종료");
 				break;
 			}
-			else if(command.equals("/usr/article/write")) {
+			else if(rq.getActionPath().equals("/usr/article/write")) {
 				
 				Article article = new Article();
-				Ut ut = new Ut();
 				
 				System.out.print("제목 입력 : ");
 				String title = sc.nextLine().trim();
@@ -64,8 +61,8 @@ public class App {
 				lastArticleId++;
 				
 				article.id = lastArticleId;
-				article.regDate = ut.getNow();
-				article.updateDate = ut.getNow();
+				article.regDate = Util.getNow();
+				article.updateDate = Util.getNow();
 				article.title = title;
 				article.body = body;
 				
@@ -74,17 +71,14 @@ public class App {
 				System.out.println(article.id + "번 게시물 생성완료");
 				
 			}
-			else if(command.equals("/usr/article/list")) {
-//				for(Object article : articles) {
-//					System.out.println(article);
-//				}
+			else if(rq.getActionPath().equals("/usr/article/list")) {
 				
 				for(int i = (articles.size() - 1); i >= 0; i--) {
 					System.out.println(articles.get(i));
 				}
 				
 			}
-			else if(command.startsWith("/usr/article/detail")) {
+			else if(rq.getActionPath().equals("/usr/article/detail")) {
 				String commandBit = command.split("\\?",2)[1];
 				String commandBitName = commandBit.split("=")[0];
 				int commandBitValue = Integer.parseInt(commandBit.split("=")[1]);
@@ -112,7 +106,7 @@ public class App {
 				System.out.println("제목:" + article.title);
 				System.out.println("내용:" + article.body);
 			}
-			else if(command.startsWith("/usr/article/delete")) {
+			else if(rq.getActionPath().equals("/usr/article/delete")) {
 				String commandBit = command.split("\\?",2)[1];
 				String commandBitName = commandBit.split("=")[0];
 				int commandBitValue = Integer.parseInt(commandBit.split("=")[1]);
@@ -139,10 +133,7 @@ public class App {
 				System.out.println(article.id + "번 게시물 삭제완료");
 				
 			}
-			else {
-				System.out.println("올바른 명령어가 아닙니다.");
-				continue;
-			}
+			
 			
 		}
 		
