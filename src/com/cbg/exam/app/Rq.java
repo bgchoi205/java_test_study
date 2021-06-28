@@ -67,6 +67,14 @@ public class Rq {
 	}
 
 
+	public String getControllerTypeName() {
+		return controllerTypeName;
+	}
+
+	public String getControllerName() {
+		return controllerName;
+	}
+
 	
 
 }
