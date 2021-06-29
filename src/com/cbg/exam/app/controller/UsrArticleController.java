@@ -115,7 +115,6 @@ public class UsrArticleController {
 
 
 	private void actionWrite(Rq rq) {
-		Article article = new Article();
 		
 		System.out.printf("제목 입력 : ");
 		String title = sc.nextLine().trim();
@@ -124,11 +123,11 @@ public class UsrArticleController {
 		
 		lastArticleId++;
 		
-		article.id = lastArticleId;
-		article.regDate = Util.getNow();
-		article.updateDate = Util.getNow();
-		article.title = title;
-		article.body = body;
+		int id = lastArticleId;
+		String regDate = Util.getNow();
+		String updateDate = Util.getNow();
+		
+		Article article = new Article(id, regDate, updateDate, title, body);
 		
 		articles.add(article);
 		
@@ -140,18 +139,14 @@ public class UsrArticleController {
 
 	private void makeTestData() {
 		for(int i = 1; i <= 10; i++) {
-			Article article = new Article();
-			
-			String title = "제목" + i;
-			String body = "내용" + i;
 			
 			lastArticleId++;
 			
-			article.id = lastArticleId;
-			article.regDate = Util.getNow();
-			article.updateDate = Util.getNow();
-			article.title = title;
-			article.body = body;
+			int id = lastArticleId;
+			String regDate = Util.getNow();
+			String updateDate = Util.getNow();
+			
+			Article article = new Article(id, regDate, updateDate, "제목" + i, "내용" + i);
 			
 			articles.add(article);
 		}

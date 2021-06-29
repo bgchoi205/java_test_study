@@ -3,6 +3,10 @@ package com.cbg.exam.app;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cbg.exam.app.container.Container;
+import com.cbg.exam.app.dto.Member;
+import com.cbg.exam.app.session.Session;
+
 public class Rq {
 	
 	private String command;
@@ -73,6 +77,13 @@ public class Rq {
 
 	public String getControllerName() {
 		return controllerName;
+	}
+
+
+	public void setSessionAttr(String key, Object value) {
+		Session session  = Container.getSession();
+		
+		session.setAttribute(key, value);
 	}
 
 	
