@@ -59,11 +59,11 @@ public class UsrArticleController {
 		System.out.printf("내용 입력 : ");
 		String body = sc.nextLine().trim();
 		
-		article.title = title;
-		article.body = body;
-		article.updateDate = Util.getNow();
+		article.setTitle(title);
+		article.setBody(body);
+		article.setUpdateDate(Util.getNow());
 		
-		System.out.println(article.id + "번 게시물 수정 완료");
+		System.out.println(article.getId() + "번 게시물 수정 완료");
 	}
 
 
@@ -80,7 +80,7 @@ public class UsrArticleController {
 		}
 		articles.remove(article);
 		
-		System.out.println(article.id + "번 게시물 삭제완료");
+		System.out.println(id + "번 게시물 삭제완료");
 	}
 
 
@@ -95,11 +95,11 @@ public class UsrArticleController {
 			System.out.println("존재하지 않는 게시물입니다.");
 			return;
 		}
-		System.out.println("번호:" + article.id);
-		System.out.println("등록:" + article.regDate);
-		System.out.println("수정:" + article.updateDate);
-		System.out.println("제목:" + article.title);
-		System.out.println("내용:" + article.body);
+		System.out.println("번호:" + article.getId());
+		System.out.println("등록:" + article.getRegDate());
+		System.out.println("수정:" + article.getUpdateDate());
+		System.out.println("제목:" + article.getTitle());
+		System.out.println("내용:" + article.getBody());
 	}
 
 
@@ -115,6 +115,7 @@ public class UsrArticleController {
 
 
 	private void actionWrite(Rq rq) {
+		Article article = new Article();
 		
 		System.out.printf("제목 입력 : ");
 		String title = sc.nextLine().trim();
@@ -123,15 +124,15 @@ public class UsrArticleController {
 		
 		lastArticleId++;
 		
-		int id = lastArticleId;
-		String regDate = Util.getNow();
-		String updateDate = Util.getNow();
-		
-		Article article = new Article(id, regDate, updateDate, title, body);
+		article.setId(lastArticleId);
+		article.setRegDate(Util.getNow());
+		article.setUpdateDate(Util.getNow());
+		article.setTitle(title);
+		article.setBody(body);
 		
 		articles.add(article);
 		
-		System.out.println(article.id + "번 게시물 생성완료");
+		System.out.println(article.getId() + "번 게시물 생성완료");
 	}
 
 
@@ -139,14 +140,15 @@ public class UsrArticleController {
 
 	private void makeTestData() {
 		for(int i = 1; i <= 10; i++) {
+			Article article = new Article();
 			
 			lastArticleId++;
 			
-			int id = lastArticleId;
-			String regDate = Util.getNow();
-			String updateDate = Util.getNow();
-			
-			Article article = new Article(id, regDate, updateDate, "제목" + i, "내용" + i);
+			article.setId(lastArticleId);
+			article.setRegDate(Util.getNow());
+			article.setUpdateDate(Util.getNow());
+			article.setTitle("제목" + i);
+			article.setBody("내용" + i);
 			
 			articles.add(article);
 		}
@@ -155,7 +157,7 @@ public class UsrArticleController {
 	
 	private Article getArticleById(int id, List<Article> articles) {
 		for(Article a : articles) {
-			if(a.id == id) {
+			if(a.getId() == id) {
 				Article article = a;
 				return article;
 			}

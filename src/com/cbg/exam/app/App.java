@@ -33,7 +33,7 @@ public class App {
 			String prompt = "명령어)";
 			
 			if(loginedMember != null) {
-				prompt = loginedMember.nickName + ")";
+				prompt = loginedMember.getNickName() + ")";
 			}
 			
 			System.out.printf(prompt);

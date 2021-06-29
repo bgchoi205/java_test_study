@@ -31,12 +31,20 @@ public class UsrMemberController {
 		
 		if(rq.getActionPath().equals("/usr/member/login")) {
 			actionLogin(rq);
+		}else if(rq.getActionPath().equals("/usr/member/logout")) {
+			actionLogout(rq);
 		}
 		
 		
 	}
 	
 	
+	private void actionLogout(Rq rq) {
+		rq.removeSessionAttr("loginedMember");
+		System.out.println("==로그아웃==");
+	}
+
+
 	private void actionLogin(Rq rq) {
 		
 		System.out.printf("로그인 아이디 입력 : ");
@@ -56,7 +64,7 @@ public class UsrMemberController {
 			System.out.println("존재하지 않는 아이디입니다.");
 			return;
 		}
-		if(member.loginPw.equals(loginPw) == false) {
+		if(member.getLoginPw().equals(loginPw) == false) {
 			System.out.println("비밀번호가 틀립니다.");
 			return;
 		}
@@ -70,7 +78,7 @@ public class UsrMemberController {
 
 	private Member getMemberByLoginId(String loginId) {
 		for(Member member : members) {
-			if(member.loginId.equals(loginId)) {
+			if(member.getLoginId().equals(loginId)) {
 				return member;
 			}
 		}
@@ -80,15 +88,16 @@ public class UsrMemberController {
 
 	private void makeTestData() {
 		for(int i = 1; i <= 5; i++) {
-			
+			Member member = new Member();
 			lastMemberId++;
 			
-			int id = lastMemberId;
-			String regDate = Util.getNow();
-			String updateDate = Util.getNow();
-			
-			
-			Member member = new Member(id, regDate, updateDate, "user" + i, "user" + i, "철수" + i, "사용자" + i);
+			member.setId(lastMemberId);
+			member.setRegDate(Util.getNow());
+			member.setUpdateDate(Util.getNow());
+			member.setLoginId("user" + i);
+			member.setLoginPw("user" + i);
+			member.setName("철수" + i);
+			member.setNickName("사용자" + i);
 			
 			members.add(member);
 		}

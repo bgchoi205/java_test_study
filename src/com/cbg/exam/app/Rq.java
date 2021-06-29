@@ -4,13 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.cbg.exam.app.container.Container;
-import com.cbg.exam.app.dto.Member;
 import com.cbg.exam.app.session.Session;
+
+import lombok.Getter;
 
 public class Rq {
 	
 	private String command;
+	@Getter
 	private String controllerTypeName;
+	@Getter
 	private String controllerName;
 	private String methodName;
 	private String queryString = "";
@@ -71,19 +74,18 @@ public class Rq {
 	}
 
 
-	public String getControllerTypeName() {
-		return controllerTypeName;
-	}
-
-	public String getControllerName() {
-		return controllerName;
-	}
-
 
 	public void setSessionAttr(String key, Object value) {
 		Session session  = Container.getSession();
 		
 		session.setAttribute(key, value);
+	}
+
+
+	public void removeSessionAttr(String key) {
+		Session session  = Container.getSession();
+		
+		session.removeAttribute(key);
 	}
 
 	
